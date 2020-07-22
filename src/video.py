@@ -26,6 +26,7 @@ def get_metadata(file_path):
 # sample images from video
 def sample_images(video_file_path, data_folder_path):
     video = cv2.VideoCapture(video_file_path)
+    video.set(cv2.CAP_PROP_FPS, 10)
 
     try:
         if not os.path.exists(data_folder_path):
@@ -35,22 +36,28 @@ def sample_images(video_file_path, data_folder_path):
         print ('Error: Creating directory of data')
 
     current_frame = 0
-    factor = video.get(cv2.CAP_PROP_FPS)
+    # factor = video.get(cv2.CAP_PROP_FPS)
+    # print(factor)
+    i = 0
 
     while True:
-        ret, frame = video.read()
+        if i%2 == 0:
+            ret, frame = video.read()
 
-        file_name = str(data_folder_path) + '/frame' + str(current_frame) + '.jpg'
-        print('Creating...' + file_name)
-        cv2.imwrite(file_name, frame)
+            file_name = str(data_folder_path) + '/frame' + str(current_frame) + '.jpg'
+            print('Creating...' + file_name)
+            cv2.imwrite(file_name, frame)
 
-        current_frame += 1 * factor
+            # current_frame += 1 * factor
+            current_frame += 1
+
+            i += 1
 
     video.release()
     cv2.destroyAllWindows()
 
 # get sample images
-
+sample_images('C:/Users/richa/Videos/small.mp4', 'C:/Users/richa/Videos/data')
 
 
 # converter('C:/Users/richa/Videos/small.webm', 'C:/Users/richa/Videos/small.mp4')
