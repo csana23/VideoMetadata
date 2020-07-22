@@ -36,31 +36,28 @@ def sample_images(video_file_path, data_folder_path):
         print ('Error: Creating directory of data')
 
     current_frame = 0
-    # factor = video.get(cv2.CAP_PROP_FPS)
-    # print(factor)
-    i = 0
+    success = True
 
-    while True:
-        if i%2 == 0:
-            ret, frame = video.read()
+    while success:
+        # how frequently we want to sample the footage
+        # video.set(cv2.CAP_PROP_POS_MSEC, (current_frame*1))
+        success, frame = video.read()
 
-            file_name = str(data_folder_path) + '/frame' + str(current_frame) + '.jpg'
-            print('Creating...' + file_name)
-            cv2.imwrite(file_name, frame)
+        file_name = str(data_folder_path) + '/frame' + str(current_frame) + '.jpg'
+        print('Creating...' + file_name)
+        cv2.imwrite(file_name, frame)
 
-            # current_frame += 1 * factor
-            current_frame += 1
-
-            i += 1
+        # current_frame += 1 * factor
+        current_frame += 1
 
     video.release()
     cv2.destroyAllWindows()
 
 # get sample images
-sample_images('C:/Users/richa/Videos/small.mp4', 'C:/Users/richa/Videos/data')
+sample_images('C:/Users/richa/Videos/cat.mp4', 'C:/Users/richa/Videos/data')
 
 
-# converter('C:/Users/richa/Videos/small.webm', 'C:/Users/richa/Videos/small.mp4')
+# converter('C:/Users/richa/Videos/cat.webm', 'C:/Users/richa/Videos/cat.mp4')
 # get_metadata('C:/Users/richa/Videos/small.mp4')
 
 
